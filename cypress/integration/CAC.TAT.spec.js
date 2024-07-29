@@ -162,4 +162,20 @@ describe("Central de Atendimento ao Cliente TAT", function () {
     cy.get(".error").should("be.visible");
     cy.get("body").should("contain", "Valide os campos obrigatórios!");
   });
+
+  it("Faz uma requizição HTTP", function () {
+    cy.request("https://cac-tat.s3.eu-central-1.amazonaws.com/index.html")
+      .should(function (response) {
+        const { status, statusText, body } = response;
+        expect(status).to.equal(200);
+        expect(statusText).to.equal("OK");
+        expect(body).to.include("CAC TAT");
+      });
+  });
+
+  it.only('Deve encontrar o gato escondido', function () {
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+  })
 });
